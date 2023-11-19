@@ -4,4 +4,4 @@ all:
     rpi:
       ansible_host: 192.168.1.171
   vars:
-    ansible_ssh_user: yogi
+    ansible_ssh_user: deploy
