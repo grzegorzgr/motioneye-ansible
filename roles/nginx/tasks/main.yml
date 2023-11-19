@@ -1,0 +1,9 @@
+---
+
+- name: Install Nginx
+  include_tasks: nginx.yml
+
+
+- name: Install certbot
+  include_tasks: certbot.yml
+  when: certbot_installed == False

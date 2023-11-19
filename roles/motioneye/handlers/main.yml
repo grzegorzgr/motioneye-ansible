@@ -1,0 +1,13 @@
+---
+- name: Restart motioneye service
+  set_fact:
+    motioneye_state: restarted
+  # changed_when: true
+  notify: Reload motioneye service
+
+- name: Reload motioneye service
+  systemd:
+    name: motioneye
+    daemon_reload: yes
+    state: "{{ motioneye_state | default('reloaded') }}"
+  become: yes

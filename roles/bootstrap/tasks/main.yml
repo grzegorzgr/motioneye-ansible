@@ -1,0 +1,4 @@
+---
+- name: Bootstrap server
+  include_tasks: bootstrap.yml
+  when: bootstrapped == False

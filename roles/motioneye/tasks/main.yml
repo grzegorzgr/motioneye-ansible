@@ -1,0 +1,8 @@
+---
+- name: Enable legacy camera
+  shell: raspi-config nonint do_legacy 0
+  register: enable_camera
+
+- name: Install motioneye
+  include_tasks: motioneye.yml
+  when: motioneye_installed == False

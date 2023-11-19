@@ -1,0 +1,35 @@
+---
+- name: Check if server is bootstrapped
+  stat: 
+    path: /opt/bootstrapped.txt
+  register: bootstrapped
+
+- name: Check if Nginx is installed
+  stat:
+    path: /usr/sbin/nginx
+  register: nginx_installed
+
+- name: Check if Certbot is installed
+  stat:
+    path: /usr/bin/certbot
+  register: certbot_installed
+
+- name: Check if Motioneye is installed
+  stat:
+    path: /usr/local/bin/meyectl
+  register: motioneye_installed
+
+- name: Set custom facts for Nginx and Certbot installation
+  set_fact:
+    rpi_bootstrapped: "{{ bootstrapped.stat.exists | bool }}"
+    nginx_installed: "{{ nginx_installed.stat.exists | bool }}"
+    certbot_installed: "{{ certbot_installed.stat.exists | bool }}"
+    motioneye_installed: "{{ motioneye_installed.stat.exists | bool }}"
+
+- name: Display custom facts
+  debug:
+    msg: |
+      Server is bootstrapped: {{ bootstrapped }}
+      Nginx is installed: {{ nginx_installed }}
+      Certbot is installed: {{ certbot_installed }}
+      Motioneye is installed: {{ motioneye_installed }}

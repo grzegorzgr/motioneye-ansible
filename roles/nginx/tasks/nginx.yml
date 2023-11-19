@@ -1,0 +1,18 @@
+- name: Install required packages
+  shell: "apt-get install -y {{ item }}"
+  loop:
+    - nginx
+  when: nginx_installed == False
+
+- name: Render Nginx Configuration Templates
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: Restart nginx service
+
+
+- name: Render Nginx webserver Templates
+  template:
+    src: motioneye.conf.j2
+    dest: /etc/nginx/sites-enabled/motioneye.conf
+  notify: Restart nginx service

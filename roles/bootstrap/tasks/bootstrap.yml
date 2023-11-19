@@ -1,0 +1,18 @@
+---
+- name: Install required packages
+  shell: "apt-get install -y {{ item }}"
+  loop:
+    - ffmpeg
+    - libmariadb3
+    - libpq5
+    - libmicrohttpd12
+    - python2
+    - curl
+
+- name: Include python install
+  include_tasks: python.yml
+
+- name: Create a bootstrap file
+  file:
+    path: /opt/bootstrapped.txt
+    state: touch

@@ -1,0 +1,7 @@
+---
+- name: Install certbot
+  shell: "apt-get install -y {{ item }}"
+  loop:
+    - certbot
+    - python3-certbot-nginx
+    

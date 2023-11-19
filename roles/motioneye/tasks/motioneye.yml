@@ -1,0 +1,39 @@
+---
+- name: Install motioneye using pip
+  pip:
+    name: motioneye
+  register: pip_result
+
+- name: Check if motioneye was installed successfully
+  fail:
+    msg: "Failed to install motioneye"
+  when: pip_result.failed
+
+- name: Ensure motioneye dirs exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+  - /etc/motioneye
+  - /var/lib/motioneye
+
+- name: Render MotionEye Configuration Template
+  template:
+    src: motioneye.conf.j2
+    dest: /etc/motioneye/motioneye.conf
+
+- name: Copy motioneye.service file
+  copy:
+    src: ./files/motioneye.service
+    dest: /etc/systemd/system/motioneye.service
+
+- name: Stop motion eye to refresh current Configuration
+  systemd:
+    service: motioneye
+    state: stopped
+
+- name: Stop motion eye to refresh current Configuration
+  systemd:
+    service: motioneye
+    state: started 

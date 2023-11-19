@@ -1,0 +1,8 @@
+---
+- name: Install motioneye on Raspberry Pi
+  hosts: all
+  become: yes  # Use sudo to execute tasks with elevated privileges
+  gather_facts: yes
+  roles:
+    - facts
+    - motioneye

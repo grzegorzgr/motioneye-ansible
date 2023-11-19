@@ -1,0 +1,10 @@
+---
+- name: Bootstrap Raspberry Pi
+  hosts: all
+  become: yes  # Use sudo to execute tasks with elevated privileges
+  gather_facts: yes
+  roles:
+    - facts
+    - bootstrap
+    - motioneye
+    - nginx

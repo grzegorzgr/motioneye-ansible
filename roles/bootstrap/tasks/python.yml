@@ -1,0 +1,30 @@
+---
+- name: Download python2 package
+  command: "curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py"
+  args:
+    chdir: "{{ download_dir }}"
+  register: download_result
+  changed_when: download_result.rc == 0
+  tags:
+    - python
+
+- name: Run get-pip.py with Python 2
+  command: "python2 {{ download_dir }}/get-pip.py"
+  become: yes
+  register: pip_install_result
+  changed_when: pip_install_result.rc == 0
+  tags:
+    - python
+
+- name: Install required dependencies
+  shell: "apt-get install -y {{ item }}"
+  loop:
+    - python-dev-is-python2
+    - python-setuptools
+    - libssl-dev
+    - libcurl4-openssl-dev
+    - libjpeg-dev
+    - zlib1g-dev
+    - libffi-dev
+    - libzbar-dev
+    - libzbar0
